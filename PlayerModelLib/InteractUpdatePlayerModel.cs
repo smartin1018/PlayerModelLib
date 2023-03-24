@@ -19,7 +19,7 @@ namespace KitchenPlayerModelLib
             CPlayerModelView component = new CPlayerModelView()
             {
                 PlayerModelID = playerModel.ID,
-                PlayerID = player.ID
+                PlayerID = player.ID,
             };
 
             Set(data.Interactor, component);

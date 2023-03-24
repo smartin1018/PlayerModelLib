@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Kitchen;
 using KitchenData;
@@ -8,11 +9,13 @@ using MessagePack;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
+using UniverseLib.Utility;
 
 namespace KitchenPlayerModelLib
 {
     public class CustomPlayerModelView : UpdatableObjectView<CustomPlayerModelView.CustomPlayerModelViewData>
     {
+        internal static Dictionary<int, int> PersistentModelDict = new Dictionary<int, int>();
         public SkinnedMeshRenderer PlayerMeshedRenderer;
 
         private PlayerInfo PlayerInfo;
@@ -43,11 +46,11 @@ namespace KitchenPlayerModelLib
                     SendUpdate(view, new CustomPlayerModelViewData()
                     {
                         PlayerModelID = data.PlayerModelID,
-                        PlayerID = data.PlayerID
+                        PlayerID = data.PlayerID,
                     });
                 }
 
-                EntityManager.RemoveComponent<CPlayerModelView>(Views);
+                // EntityManager.RemoveComponent<CPlayerModelView>(Views);
             }
         }
         
@@ -100,6 +103,7 @@ namespace KitchenPlayerModelLib
                 
                 PlayerMeshedRenderer.sharedMesh = playerModel.Mesh == null ? PlayerModelLib.DefaultMeshRenderer.sharedMesh : playerModel.Mesh;
                 PlayerMeshedRenderer.materials = materials;
+                PersistentModelDict[this.Data.PlayerID] = this.Data.PlayerModelID;
             }
             else
             {
