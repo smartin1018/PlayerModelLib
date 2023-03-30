@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Kitchen;
 using KitchenMods;
 using Unity.Collections;
@@ -12,26 +13,12 @@ namespace KitchenPlayerModelLib
     {
 
         private EntityQuery PlayerQuery;
-        // private EntityQuery ViewQuery;
 
         protected override void Initialise()
         {
             base.Initialise();
             PlayerQuery = GetEntityQuery(typeof(CPlayer));
-            // ViewQuery = GetEntityQuery(typeof(CPlayerModelView));
         }
-
-        /*public override void BeforeSaving(SaveSystemType system_type)
-        {
-            base.BeforeSaving(system_type);
-            PlayerModelLib.LogInfo("Saving skins...");
-            var views = ViewQuery.ToComponentDataArray<CPlayerModelView>(Allocator.Temp);
-            foreach (var view in views)
-            {
-                CustomPlayerModelView.PersistentModelDict[view.PlayerID] = view.PlayerModelID;
-            }
-            PlayerModelLib.LogInfo(string.Join(Environment.NewLine, CustomPlayerModelView.PersistentModelDict));
-        }*/
 
         public override void AfterLoading(SaveSystemType system_type)
         {
@@ -43,12 +30,13 @@ namespace KitchenPlayerModelLib
             for (int i = 0; i < playerArray.Length; i++)
             {
                 var player = playerArray[i];
-                var component = components[i];
+                var id = components[i].ID;
+                CustomPlayerModelView.PersistentModelDict.TryGetValue(id, out int modelId);
 
                 Set(player, new CPlayerModelView()
                 {
-                    PlayerID = component.ID,
-                    PlayerModelID = CustomPlayerModelView.PersistentModelDict[component.ID]
+                    PlayerID = id,
+                    PlayerModelID = modelId,
                 });
             }
         }
