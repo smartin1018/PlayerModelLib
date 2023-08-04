@@ -16,7 +16,7 @@ namespace KitchenPlayerModelLib
         // Mod Version must follow semver notation e.g. "1.2.3"
         public const string MOD_GUID = "com.martoph.playermodellib";
         public const string MOD_NAME = "PlayerModelLIb";
-        public const string MOD_VERSION = "0.1.1";
+        public const string MOD_VERSION = "0.1.2";
         public const string MOD_AUTHOR = "Martoph";
         public const string MOD_GAMEVERSION = ">=1.1.7";
         // Game version this mod is designed for in semver
