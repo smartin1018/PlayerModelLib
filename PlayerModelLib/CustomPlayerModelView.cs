@@ -81,7 +81,12 @@ namespace KitchenPlayerModelLib
 
             this.PlayerInfo = Players.Main.Get(this.Data.PlayerID);
             var playerModel = GameData.Main.Get<PlayerModel>(this.Data.PlayerModelID);
-            var defaultMaterial = new Material(MaterialUtils.GetExistingMaterial("Player"));
+            PlayerModelLib.LogInfo("MATERIALS: ");
+            foreach (var allMaterial in MaterialUtils.GetAllMaterials(true))
+            {
+                PlayerModelLib.LogInfo(allMaterial);
+            }
+            var defaultMaterial = new Material(MaterialUtils.GetExistingMaterial("Player - New"));
             defaultMaterial.SetColor(Color0, PlayerInfo.Profile.Colour);
             if (playerModel != null)
             {
